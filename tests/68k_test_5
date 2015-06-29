@@ -1,0 +1,152 @@
+#
+# 68k_test_5
+#
+# fifth test file for the 68k core testing program
+#
+# tests CMP/EOR instructions in the 0xbxxx range
+#
+
+# $Id$
+
+#
+# NOTE: Someone plays fast and loose with flags...
+#
+
+# test EOR.B instruction
+start eor.b d0, d1, take 1
+set mem 0x002000 = 0xb101
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x55aa55aa
+set cycles 4
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x55aa5500
+check flags 0x0004
+check cycles 0
+done
+
+# test EOR.B instruction
+start eor.b d0, d1, take 2
+set mem 0x002000 = 0xb101
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x55aa5555
+set cycles 4
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x55aa55ff
+check flags 0x0008
+check cycles 0
+done
+
+# test EOR.B instruction
+start eor.b d0, d1, take 3
+set mem 0x002000 = 0xb101
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x55aa55a5
+set cycles 4
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x55aa550f
+check flags 0x0000
+check cycles 0
+done
+
+# test EOR.W instruction
+start eor.w d0, d1, take 1
+set mem 0x002000 = 0xb141
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x55aa55aa
+set cycles 4
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x55aa0000
+check flags 0x0004
+check cycles 0
+done
+
+# test EOR.W instruction
+start eor.w d0, d1, take 2
+set mem 0x002000 = 0xb141
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x55aaaa55
+set cycles 4
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x55aaffff
+check flags 0x0008
+check cycles 0
+done
+
+# test EOR.W instruction
+start eor.w d0, d1, take 3
+set mem 0x002000 = 0xb141
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x55aa5aa5
+set cycles 4
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x55aa0f0f
+check flags 0x0000
+check cycles 0
+done
+
+# test EOR.L instruction
+start eor.l d0, d1, take 1
+set mem 0x002000 = 0xb181
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x55aa55aa
+set cycles 8
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x00000000
+check flags 0x0004
+check cycles 0
+done
+
+# test EOR.L instruction
+start eor.l d0, d1, take 2
+set mem 0x002000 = 0xb181
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0xaa55aa55
+set cycles 8
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0xffffffff
+check flags 0x0008
+check cycles 0
+done
+
+# test EOR.L instruction
+start eor.l d0, d1, take 3
+set mem 0x002000 = 0xb181
+set pc 0x002000
+set reg d0 = 0x55aa55aa
+set reg d1 = 0x5aa55aa5
+set cycles 8
+set flags 0x0000
+run
+check pc 0x002002
+check reg d1 = 0x0f0f0f0f
+check flags 0x0000
+check cycles 0
+done
+
+#
+# $Log$
+#

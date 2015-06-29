@@ -1,0 +1,128 @@
+#
+# 68k_test_12
+#
+# twelth test file for the 68k core testing program
+#
+# tests 32-bit MOVE/MOVEA instructions
+#
+
+# $Id$
+
+#
+# NOTE: Someone plays fast and loose with flags...
+#
+
+#
+# testing long-sized MOVE (reg, reg) instructions
+#
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects all low)
+start move.l d0, d1 take 1
+set memory 0x000000 = 0x2200
+set reg d0 =0x42424242
+set reg d1= 0xaa55aa55
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x42424242
+check flags 0x0000
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects all low)
+start move.l d0, d1 take 2
+set memory 0x000000 = 0x2200
+set reg d0 =0x42424242
+set reg d1= 0xaa55aa55
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x42424242
+check flags 0x0010
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects Z high, all others low)
+start move.l d0, d1, take 3
+set memory 0x000000 = 0x2200
+set register d0 = 0x00000000
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x000000000
+check flags 0x0004
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects N high, all others low)
+start move.l d0, d1, take 4
+set memory 0x000000 = 0x2200
+set register d0 = 0xf2ed3a80
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0xf2ed3a80
+check flags 0x0008
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects Z high, all others low)
+start move.l d0, d1, take 5
+set memory 0x000000 = 0x2200
+set register d0 = 0x00000000
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x00000000
+check flags 0x0014
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects N high, all others low)
+start move.l d0, d1, take 6
+set memory 0x000000 = 0x2200
+set register d0 = 0xf2ed3a80
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0xf2ed3a80
+check flags 0x0018
+check cycles 0
+done
+
+#
+# by this point, flag evaluation from MOVE.L is probably correct
+#
+
+# test movea.l d0, a0
+start movea.l d0, a0, take 1
+set mem 0x002000 = 0x2040
+set register d0 = 0xaa55aa55
+set register a0 = 0x55aa55aa
+set cycles 4
+set pc 0x002000
+run
+check cycles 0
+check pc 0x002002
+check reg a0 = 0xaa55aa55
+done
+
+#
+# $Log$
+#

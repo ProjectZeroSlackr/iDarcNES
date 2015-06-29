@@ -1,0 +1,59 @@
+#
+# 68k_test_3
+#
+# third test file for the 68k core testing program
+#
+# tests DBcc instructions
+#
+
+# $Id: 68k_test_3,v 1.1 1999/12/16 05:04:03 nyef Exp $
+
+#
+# NOTE: Someone plays fast and loose with flags...
+#
+
+# test DBF not taken
+start dbf D0, $, take 1
+set mem 0x002000 = 0x51c8
+set mem 0x002002 = 0xfffe
+set pc 0x002000
+set reg d0 = 0x00010000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x0001ffff
+check cycles 0
+done
+
+# test DBF not taken
+start dbf D0, $, take 2
+set mem 0x002000 = 0x51c8
+set mem 0x002002 = 0xfffe
+set pc 0x002000
+set reg d0 = 0x00000000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x0000ffff
+check cycles 0
+done
+
+# test DBF taken
+start dbf D0, $, take 3
+set mem 0x002000 = 0x51c8
+set mem 0x002002 = 0xfffe
+set pc 0x002000
+set reg d0 = 0x00420001
+set cycles 10
+run
+check pc 0x002000
+check reg d0 = 0x00420000
+check cycles 0
+done
+
+#
+# $Log: 68k_test_3,v $
+# Revision 1.1  1999/12/16 05:04:03  nyef
+# Initial revision
+#
+#

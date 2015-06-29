@@ -1,0 +1,383 @@
+#
+# 68k_test_4
+#
+# fourth test file for the 68k core testing program
+#
+# tests single operand instructions in the 0x4xxx range
+#
+
+# $Id$
+
+#
+# NOTE: Someone plays fast and loose with flags...
+#
+
+# test NOT instruction
+start not.b d0, take 1
+set mem 0x002000 = 0x4600
+set reg d0 = 0x00000000
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x000000ff
+check flags 0x0008
+done
+
+# test NOT instruction
+start not.b d0, take 2
+set mem 0x002000 = 0x4600
+set reg d0 = 0x00000000
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x000000ff
+check flags 0x0018
+done
+
+# test NOT instruction
+start not.b d0, take 3
+set mem 0x002000 = 0x4600
+set reg d0 = 0x0000ffff
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x0000ff00
+check flags 0x0004
+done
+
+# test NOT instruction
+start not.b d0, take 4
+set mem 0x002000 = 0x4600
+set reg d0 = 0x0000ffff
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x0000ff00
+check flags 0x0014
+done
+
+# test NOT instruction
+start not.w d0, take 1
+set mem 0x002000 = 0x4640
+set reg d0 = 0x00000000
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x0000ffff
+check flags 0x0008
+done
+
+# test NOT instruction
+start not.w d0, take 2
+set mem 0x002000 = 0x4640
+set reg d0 = 0x00000000
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x0000ffff
+check flags 0x0018
+done
+
+# test NOT instruction
+start not.w d0, take 3
+set mem 0x002000 = 0x4640
+set reg d0 = 0x00ffffff
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x00ff0000
+check flags 0x0004
+done
+
+# test NOT instruction
+start not.w d0, take 4
+set mem 0x002000 = 0x4640
+set reg d0 = 0x00ffffff
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x00ff0000
+check flags 0x0014
+done
+
+# test NOT instruction
+start not.l d0, take 1
+set mem 0x002000 = 0x4680
+set reg d0 = 0x00000000
+set flags 0x0000
+set pc 0x002000
+set cycles 6
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0xffffffff
+check flags 0x0008
+done
+
+# test NOT instruction
+start not.l d0, take 2
+set mem 0x002000 = 0x4680
+set reg d0 = 0x00000000
+set flags 0x001f
+set pc 0x002000
+set cycles 6
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0xffffffff
+check flags 0x0018
+done
+
+# test NOT instruction
+start not.l d0, take 3
+set mem 0x002000 = 0x4680
+set reg d0 = 0xffffffff
+set flags 0x0000
+set pc 0x002000
+set cycles 6
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x00000000
+check flags 0x0004
+done
+
+# test NOT instruction
+start not.l d0, take 4
+set mem 0x002000 = 0x4680
+set reg d0 = 0xffffffff
+set flags 0x001f
+set pc 0x002000
+set cycles 6
+run
+check pc 0x002002
+check cycles 0
+check reg d0 = 0x00000000
+check flags 0x0014
+done
+
+# test TST instruction
+start tst.b d0, take 1
+set mem 0x002000 = 0x4a00
+set reg d0 = 0x00000000
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0004
+done
+
+# test TST instruction
+start tst.b d0, take 2
+set mem 0x002000 = 0x4a00
+set reg d0 = 0x00000000
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0014
+done
+
+# test TST instruction
+start tst.b d0, take 3
+set mem 0x002000 = 0x4a00
+set reg d0 = 0x0000ffff
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0008
+done
+
+# test TST instruction
+start tst.b d0, take 4
+set mem 0x002000 = 0x4a00
+set reg d0 = 0x0000ffff
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0018
+done
+
+# test TST instruction
+start tst.w d0, take 1
+set mem 0x002000 = 0x4a40
+set reg d0 = 0x00000000
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0004
+done
+
+# test TST instruction
+start tst.w d0, take 2
+set mem 0x002000 = 0x4a40
+set reg d0 = 0x00000000
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0014
+done
+
+# test TST instruction
+start tst.w d0, take 3
+set mem 0x002000 = 0x4a40
+set reg d0 = 0x00ffffff
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0008
+done
+
+# test TST instruction
+start tst.w d0, take 4
+set mem 0x002000 = 0x4a40
+set reg d0 = 0x00ffffff
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0018
+done
+
+# test TST instruction
+start tst.l d0, take 1
+set mem 0x002000 = 0x4a80
+set reg d0 = 0x00000000
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0004
+done
+
+# test TST instruction
+start tst.l d0, take 2
+set mem 0x002000 = 0x4a80
+set reg d0 = 0x00000000
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0014
+done
+
+# test TST instruction
+start tst.l d0, take 3
+set mem 0x002000 = 0x4a80
+set reg d0 = 0xffffffff
+set flags 0x0000
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0008
+done
+
+# test TST instruction
+start tst.l d0, take 4
+set mem 0x002000 = 0x4a80
+set reg d0 = 0xffffffff
+set flags 0x001f
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0018
+done
+
+# test CLR instruction
+start clr.b d0, take 1
+set mem 0x002000 = 0x4200
+set reg d0 = 0x55aa55aa
+set pc 0x002000
+set flags 0x0000
+set cycles 4
+run
+check cycles 0
+check pc 0x002002
+check flags 0x0004
+check reg d0 = 0x55aa5500
+done
+
+# test CLR instruction
+start clr.w d0, take 1
+set mem 0x002000 = 0x4240
+set reg d0 = 0x55aa55aa
+set pc 0x002000
+set flags 0x001f
+set cycles 4
+run
+check cycles 0
+check pc 0x002002
+check flags 0x0014
+check reg d0 = 0x55aa0000
+done
+
+# test CLR instruction
+start clr.l d0, take 1
+set mem 0x002000 = 0x4280
+set reg d0 = 0x55aa55aa
+set pc 0x002000
+set flags 0x001f
+set cycles 6
+run
+check cycles 0
+check pc 0x002002
+check flags 0x0014
+check reg d0 = 0x00000000
+done
+
+#
+# $Log$
+#

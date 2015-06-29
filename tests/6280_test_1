@@ -1,0 +1,191 @@
+#
+# 6280_test_1
+#
+# test flag manipulation instructions
+#
+
+#
+# test CLC instruction (0x18)
+#
+
+start clc (0x18), take 1
+set pc 0x2000
+set mem 0x2000 = 0x18
+set flags 0x00
+set cycles 2
+run
+check flags 0x00
+check pc 0x2001
+check cycles 0
+done
+
+start clc (0x18), take 2
+set pc 0x2000
+set mem 0x2000 = 0x18
+set flags 0xff
+set cycles 2
+run
+check flags 0xfe
+check pc 0x2001
+check cycles 0
+done
+
+#
+# test SEC instruction (0x38)
+#
+
+start sec (0x38), take 1
+set pc 0x2000
+set mem 0x2000 = 0x38
+set flags 0x00
+set cycles 2
+run
+check flags 0x01
+check pc 0x2001
+check cycles 0
+done
+
+start sec (0x38), take 2
+set pc 0x2000
+set mem 0x2000 = 0x38
+set flags 0xff
+set cycles 2
+run
+check flags 0xff
+check pc 0x2001
+check cycles 0
+done
+
+#
+# test CLD instruction (0xd8)
+#
+
+start cld (0xd8), take 1
+set pc 0x2000
+set mem 0x2000 = 0xd8
+set flags 0x00
+set cycles 2
+run
+check flags 0x00
+check pc 0x2001
+check cycles 0
+done
+
+start cld (0xd8), take 2
+set pc 0x2000
+set mem 0x2000 = 0xd8
+set flags 0xff
+set cycles 2
+run
+check flags 0xf7
+check pc 0x2001
+check cycles 0
+done
+
+#
+# test SED instruction (0xf8)
+#
+
+start sed (0xf8), take 1
+set pc 0x2000
+set mem 0x2000 = 0xf8
+set flags 0x00
+set cycles 2
+run
+check flags 0x08
+check pc 0x2001
+check cycles 0
+done
+
+start sed (0xf8), take 2
+set pc 0x2000
+set mem 0x2000 = 0xf8
+set flags 0xff
+set cycles 2
+run
+check flags 0xff
+check pc 0x2001
+check cycles 0
+done
+
+#
+# test CLI instruction (0x58)
+#
+
+start cli (0x58), take 1
+set pc 0x2000
+set mem 0x2000 = 0x58
+set flags 0x00
+set cycles 2
+run
+check flags 0x00
+check pc 0x2001
+check cycles 0
+done
+
+start cli (0x58), take 2
+set pc 0x2000
+set mem 0x2000 = 0x58
+set flags 0xff
+set cycles 2
+run
+check flags 0xfb
+check pc 0x2001
+check cycles 0
+done
+
+#
+# test SEI instruction (0x78)
+#
+
+start sei (0x78), take 1
+set pc 0x2000
+set mem 0x2000 = 0x78
+set flags 0x00
+set cycles 2
+run
+check flags 0x04
+check pc 0x2001
+check cycles 0
+done
+
+start sei (0x78), take 2
+set pc 0x2000
+set mem 0x2000 = 0x78
+set flags 0xff
+set cycles 2
+run
+check flags 0xff
+check pc 0x2001
+check cycles 0
+done
+
+#
+# test CLV instruction (0xb8)
+#
+
+start clv (0xb8), take 1
+set pc 0x2000
+set mem 0x2000 = 0xb8
+set flags 0x00
+set cycles 2
+run
+check flags 0x00
+check pc 0x2001
+check cycles 0
+done
+
+start clv (0xb8), take 2
+set pc 0x2000
+set mem 0x2000 = 0xb8
+set flags 0xff
+set cycles 2
+run
+check flags 0xbf
+check pc 0x2001
+check cycles 0
+done
+
+#
+# EOF
+#

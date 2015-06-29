@@ -1,0 +1,201 @@
+#
+# 6280_test_13
+#
+# test compare instructions
+#
+
+#
+# test CPX Imm instruction (0xe0)
+#
+
+start cpx imm (0xe0), take 1
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0x55
+set reg x = 0x55
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x03
+done
+
+start cpx imm (0xe0), take 2
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0xaa
+set reg x = 0x55
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+done
+
+start cpx imm (0xe0), take 3
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0x55
+set reg x = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x01
+done
+
+#
+# Extra tests to make sure CPX/Y functionality works
+#
+
+start cpx imm (0xe0), take 4
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0xaa
+set reg x = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x03
+done
+
+start cpx imm (0xe0), take 5
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0x54
+set reg x = 0x55
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x01
+done
+
+start cpx imm (0xe0), take 6
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0x55
+set reg x = 0x54
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+done
+
+start cpx imm (0xe0), take 7
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0xaa
+set reg x = 0xab
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x01
+done
+
+start cpx imm (0xe0), take 8
+set mem 0x2000 = 0xe0
+set mem 0x2001 = 0xab
+set reg x = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+done
+
+#
+# test CPY Imm instruction (0xc0)
+#
+
+start cpy imm (0xc0), take 1
+set mem 0x2000 = 0xc0
+set mem 0x2001 = 0x55
+set reg y = 0x55
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x03
+done
+
+start cpy imm (0xc0), take 2
+set mem 0x2000 = 0xc0
+set mem 0x2001 = 0xaa
+set reg y = 0x55
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+done
+
+start cpy imm (0xc0), take 3
+set mem 0x2000 = 0xc0
+set mem 0x2001 = 0x55
+set reg y = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+check flags 0x01
+done
+
+#
+# test CPX ZPage instruction (0xe4)
+#
+
+start cpx zpage (0xe4), take 1
+set mem 0x2000 = 0xe4
+set mem 0x2001 = 0x42
+set mem 0x0042 = 0x55
+set reg x = 0x55
+set flags 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2002
+check flags 0x03
+done
+
+#
+# test CPX Abs instruction (0xec)
+#
+
+start cpx abs (0xec), take 1
+set mem 0x2000 = 0xec
+set mem 0x2001 = 0x42
+set mem 0x2002 = 0x27
+set mem 0x2742 = 0x55
+set reg x = 0x55
+set flags 0x00
+set pc 0x2000
+set cycles 4
+run
+check cycles 0
+check pc 0x2003
+check flags 0x03
+done
+
+#
+# EOF
+#

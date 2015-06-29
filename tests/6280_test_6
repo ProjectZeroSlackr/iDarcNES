@@ -1,0 +1,163 @@
+#
+# 6280_test_6
+#
+# test stack instructions
+#
+
+#
+# test PHA (0x48)
+#
+
+start pha (0x48), take 1
+set mem 0x2000 = 0x48
+set reg a = 0x5a
+set reg s = 0x80
+set mem 0x0180 = 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x7f
+check mem 0x0180 = 0x5a
+done
+
+#
+# test PHP (0x08)
+#
+# NOTE: may want to test reserved flag bits
+#
+
+start php (0x08), take 1
+set mem 0x2000 = 0x08
+set flags 0x5a
+set reg s = 0x80
+set mem 0x0180 = 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x7f
+check mem 0x0180 = 0x5a
+done
+
+#
+# test PHX (0xda)
+#
+
+start phx (0xda), take 1
+set mem 0x2000 = 0xda
+set reg x = 0x5a
+set reg s = 0x80
+set mem 0x0180 = 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x7f
+check mem 0x0180 = 0x5a
+done
+
+#
+# test PHY (0x5a)
+#
+
+start phy (0x5a), take 1
+set mem 0x2000 = 0x5a
+set reg y = 0x5a
+set reg s = 0x80
+set mem 0x0180 = 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x7f
+check mem 0x0180 = 0x5a
+done
+
+#
+# test PLA (0x68)
+#
+
+start pla (0x68), take 1
+set mem 0x2000 = 0x68
+set reg a = 0x00
+set reg s = 0x7f
+set mem 0x0180 = 0xa5
+set flags 0x00
+set pc 0x2000
+set cycles 4
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x80
+check reg a = 0xa5
+check flags 0x80
+done
+
+#
+# test PLP (0x28)
+#
+# NOTE: may want to test reserved flag bits
+#
+
+start plp (0x28), take 1
+set mem 0x2000 = 0x28
+set flags 0x00
+set reg s = 0x7f
+set mem 0x0180 = 0x5a
+set pc 0x2000
+set cycles 4
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x80
+check flags 0x5a
+done
+
+#
+# test PLX (0xfa)
+#
+
+start plx (0xfa), take 1
+set mem 0x2000 = 0xfa
+set reg x = 0x00
+set reg s = 0x7f
+set mem 0x0180 = 0xa5
+set flags 0x00
+set pc 0x2000
+set cycles 4
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x80
+check reg x = 0xa5
+check flags 0x80
+done
+
+#
+# test PLY (0x7a)
+#
+
+start ply (0x7a), take 1
+set mem 0x2000 = 0x7a
+set reg y = 0x00
+set reg s = 0x7f
+set mem 0x0180 = 0xa5
+set flags 0x00
+set pc 0x2000
+set cycles 4
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x80
+check reg y = 0xa5
+check flags 0x80
+done
+
+#
+# EOF
+#

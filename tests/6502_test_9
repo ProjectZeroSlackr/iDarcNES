@@ -1,0 +1,229 @@
+#
+# 6280_test_9
+#
+# test inc/dec instructions
+#
+
+#
+# test INC ZPage (0xe6)
+#
+
+start inc zpage (0xe6), take 1
+set mem 0x2000 = 0xe6
+set mem 0x2001 = 0x44
+set mem 0x0044 = 0x7f
+set flags 0x00
+set pc 0x2000
+set cycles 5
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+check mem 0x0044 = 0x80
+done
+
+#
+# test INC ZPage, X (0xf6)
+#
+
+start inc zpagex (0xf6), take 1
+set mem 0x2000 = 0xf6
+set mem 0x2001 = 0x44
+set reg x = 0xfc
+set mem 0x0040 = 0x7f
+set flags 0x00
+set pc 0x2000
+set cycles 6
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+check mem 0x0040 = 0x80
+done
+
+#
+# test INC Abs (0xee)
+#
+
+start inc abs (0xee), take 1
+set mem 0x2000 = 0xee
+set mem 0x2001 = 0x44
+set mem 0x2002 = 0x35
+set mem 0x3544 = 0x7f
+set flags 0x00
+set pc 0x2000
+set cycles 6
+run
+check cycles 0
+check pc 0x2003
+check flags 0x80
+check mem 0x3544 = 0x80
+done
+
+#
+# test INC Abs, X (0xfe)
+#
+
+start inc absx (0xfe), take 1
+set mem 0x2000 = 0xfe
+set mem 0x2001 = 0x44
+set mem 0x2002 = 0x35
+set reg x = 0xfc
+set mem 0x3640 = 0x7f
+set flags 0x00
+set pc 0x2000
+set cycles 7
+run
+check cycles 0
+check pc 0x2003
+check flags 0x80
+check mem 0x3640 = 0x80
+done
+
+#
+# test INX (0xe8)
+#
+
+start inx (0xe8), take 1
+set mem 0x2000 = 0xe8
+set reg x = 0x7f
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check flags 0x80
+check reg x = 0x80
+done
+
+#
+# test INY (0xc8)
+#
+
+start iny (0xc8), take 1
+set mem 0x2000 = 0xc8
+set reg y = 0x7f
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check flags 0x80
+check reg y = 0x80
+done
+
+#
+# test DEC ZPage (0xc6)
+#
+
+start dec zpage (0xc6), take 1
+set mem 0x2000 = 0xc6
+set mem 0x2001 = 0x44
+set mem 0x0044 = 0x00
+set flags 0x00
+set pc 0x2000
+set cycles 5
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+check mem 0x0044 = 0xff
+done
+
+#
+# test DEC ZPage, X (0xd6)
+#
+
+start dec zpagex (0xd6), take 1
+set mem 0x2000 = 0xd6
+set mem 0x2001 = 0x44
+set reg x = 0xfc
+set mem 0x0040 = 0x00
+set flags 0x00
+set pc 0x2000
+set cycles 6
+run
+check cycles 0
+check pc 0x2002
+check flags 0x80
+check mem 0x0040 = 0xff
+done
+
+#
+# test DEC Abs (0xce)
+#
+
+start dec abs (0xce), take 1
+set mem 0x2000 = 0xce
+set mem 0x2001 = 0x44
+set mem 0x2002 = 0x35
+set mem 0x3544 = 0x00
+set flags 0x00
+set pc 0x2000
+set cycles 6
+run
+check cycles 0
+check pc 0x2003
+check flags 0x80
+check mem 0x3544 = 0xff
+done
+
+#
+# test DEC Abs, X (0xde)
+#
+
+start dec absx (0xde), take 1
+set mem 0x2000 = 0xde
+set mem 0x2001 = 0x44
+set mem 0x2002 = 0x35
+set reg x = 0xfc
+set mem 0x3640 = 0x00
+set flags 0x00
+set pc 0x2000
+set cycles 7
+run
+check cycles 0
+check pc 0x2003
+check flags 0x80
+check mem 0x3640 = 0xff
+done
+
+#
+# test DEX (0xca)
+#
+
+start dex (0xca), take 1
+set mem 0x2000 = 0xca
+set reg x = 0x00
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check flags 0x80
+check reg x = 0xff
+done
+
+#
+# test DEY (0x88)
+#
+
+start dey (0x88), take 1
+set mem 0x2000 = 0x88
+set reg y = 0x00
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check flags 0x80
+check reg y = 0xff
+done
+
+#
+# EOF
+#

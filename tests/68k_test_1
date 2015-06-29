@@ -1,0 +1,1193 @@
+#
+# 68k_test_1
+#
+# first test file for the 68k core testing program
+#
+# tests 8 and 16-bit MOVE/MOVEA instructions and
+# basic operation of all addressing modes
+#
+
+# $Id: 68k_test_1,v 1.3 1999/12/18 04:18:01 nyef Exp $
+
+#
+# NOTE: Someone plays fast and loose with flags...
+#
+
+#
+# testing byte-sized MOVE (reg, reg) instructions
+#
+
+# test move.b d0, d1 (0x1200)
+# tests flags (expects all low)
+start move.b d0, d1 take 1
+set memory 0x000000=0x1200
+set reg d0 =0x42424242
+set reg d1= 0xaa55aa55
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0xaa55aa42
+check flags 0x0000
+check cycles 0
+done
+
+# test move.b d0, d1 (0x1200)
+# tests flags (expects all low)
+start move.b d0, d1 take 2
+set memory 0x000000=0x1200
+set reg d0 =0x42424242
+set reg d1= 0xaa55aa55
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0xaa55aa42
+check flags 0x0010
+check cycles 0
+done
+
+# test move.b d0, d1 (0x1200)
+# tests flags (expects Z high, all others low)
+start move.b d0, d1, take 3
+set memory 0x000000 = 0x1200
+set register d0 = 0xf2ed3a00
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x05551200
+check flags 0x0004
+check cycles 0
+done
+
+# test move.b d0, d1 (0x1200)
+# tests flags (expects N high, all others low)
+start move.b d0, d1, take 4
+set memory 0x000000 = 0x1200
+set register d0 = 0xf2ed3a80
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x05551280
+check flags 0x0008
+check cycles 0
+done
+
+# test move.b d0, d1 (0x1200)
+# tests flags (expects Z high, all others low)
+start move.b d0, d1, take 5
+set memory 0x000000 = 0x1200
+set register d0 = 0xf2ed3a00
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x05551200
+check flags 0x0014
+check cycles 0
+done
+
+# test move.b d0, d1 (0x1200)
+# tests flags (expects N high, all others low)
+start move.b d0, d1, take 6
+set memory 0x000000 = 0x1200
+set register d0 = 0xf2ed3a80
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x05551280
+check flags 0x0018
+check cycles 0
+done
+
+#
+# by this point, flag evaluation from MOVE.B is probably correct
+#
+
+#
+# testing word-sized MOVE (reg, reg) instructions
+#
+
+# test move.w d0, d1 (0x3200)
+# tests flags (expects all low)
+start move.w d0, d1 take 1
+set memory 0x000000 = 0x3200
+set reg d0 = 0x42424242
+set reg d1 = 0xaa55aa55
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0xaa554242
+check flags 0x0000
+check cycles 0
+done
+
+# test move.w d0, d1 (0x3200)
+# tests flags (expects all low)
+start move.w d0, d1 take 2
+set memory 0x000000 = 0x3200
+set reg d0 = 0x42424242
+set reg d1 = 0xaa55aa55
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0xaa554242
+check flags 0x0010
+check cycles 0
+done
+
+# test move.w d0, d1 (0x3200)
+# tests flags (expects Z high, all others low)
+start move.w d0, d1, take 3
+set memory 0x000000 = 0x3200
+set register d0 = 0xf2ed0000
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x05550000
+check flags 0x0004
+check cycles 0
+done
+
+# test move.w d0, d1 (0x3200)
+# tests flags (expects N high, all others low)
+start move.w d0, d1, take 4
+set memory 0x000000 = 0x3200
+set register d0 = 0xf2ed8a80
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x05558a80
+check flags 0x0008
+check cycles 0
+done
+
+# test move.w d0, d1 (0x3200)
+# tests flags (expects Z high, all others low)
+start move.w d0, d1, take 5
+set memory 0x000000 = 0x3200
+set register d0 = 0xf2ed0000
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x05550000
+check flags 0x0014
+check cycles 0
+done
+
+# test move.w d0, d1 (0x3200)
+# tests flags (expects N high, all others low)
+start move.w d0, d1, take 6
+set memory 0x000000 = 0x3200
+set register d0 = 0xf2ed8580
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x05558580
+check flags 0x0018
+check cycles 0
+done
+
+#
+# by this point, flag evaluation from MOVE.W is probably correct
+#
+
+#
+# testing long-sized MOVE (reg, reg) instructions
+#
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects all low)
+start move.l d0, d1 take 1
+set memory 0x000000 = 0x2200
+set reg d0 = 0x42424242
+set reg d1 = 0xaa55aa55
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x42424242
+check flags 0x0000
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects all low)
+start move.l d0, d1 take 2
+set memory 0x000000 = 0x2200
+set reg d0 = 0x42424242
+set reg d1 = 0xaa55aa55
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x42424242
+check flags 0x0010
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects Z high, all others low)
+start move.l d0, d1, take 3
+set memory 0x000000 = 0x2200
+set register d0 = 0x00000000
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x00000000
+check flags 0x0004
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects N high, all others low)
+start move.l d0, d1, take 4
+set memory 0x000000 = 0x2200
+set register d0 = 0x82ed8a80
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x0000
+set cycles 4
+run
+check reg d1 = 0x82ed8a80
+check flags 0x0008
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects Z high, all others low)
+start move.l d0, d1, take 5
+set memory 0x000000 = 0x2200
+set register d0 = 0x00000000
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0x00000000
+check flags 0x0014
+check cycles 0
+done
+
+# test move.l d0, d1 (0x2200)
+# tests flags (expects N high, all others low)
+start move.l d0, d1, take 6
+set memory 0x000000 = 0x2200
+set register d0 = 0xf2ed8580
+set register d1 = 0x05551212
+set pc 0x000000
+set flags 0x001f
+set cycles 4
+run
+check reg d1 = 0xf2ed8580
+check flags 0x0018
+check cycles 0
+done
+
+#
+# by this point, flag evaluation from MOVE.L is probably correct
+#
+
+#
+# testing byte-sized MOVE ((reg), reg) instructions
+#
+
+# test move.b (a0), d0 (0x1010)
+# does not test flags
+start move.b (a0), d0, take 1
+set memory 0x000000 = 0x1010
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a0 = 0x00002000
+set pc 0x000000
+set cycles 8
+run
+check reg d0 = 0x5a5aa5be
+check cycles 0
+done
+
+# test move.b (a0)+, d0 (0x1018)
+# does not test flags
+start move.b (a0)+, d0, take 1
+set memory 0x000000 = 0x1018
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a0 = 0x00002000
+set pc 0x000000
+set cycles 8
+run
+check reg d0 = 0x5a5aa5be
+check reg a0 = 0x00002001
+check cycles 0
+done
+
+# test move.b -(a0), d0 (0x1020)
+# does not test flags
+start move.b -(a0), d0, take 1
+set memory 0x000000 = 0x1020
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a0 = 0x00002001
+set pc 0x000000
+set cycles 10
+run
+check reg d0 = 0x5a5aa5be
+check reg a0 = 0x00002000
+check cycles 0
+done
+
+# test move.b (a7)+, d0 (0x101f)
+# does not test flags
+start move.b (a7)+, d0, take 1
+set memory 0x000000 = 0x101f
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a7 = 0x00002000
+set pc 0x000000
+set cycles 8
+run
+check reg d0 = 0x5a5aa5be
+check reg a7 = 0x00002002
+check cycles 0
+done
+
+# test move.b -(a7), d0 (0x1027)
+# does not test flags
+start move.b -(a7), d0, take 1
+set memory 0x000000 = 0x1027
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a7 = 0x00002002
+set pc 0x000000
+set cycles 10
+run
+check reg d0 = 0x5a5aa5be
+check reg a7 = 0x00002000
+check cycles 0
+done
+
+#
+# testing byte-sized MOVE (reg, (reg)) instructions
+#
+
+# test move.b d0, (a0) (0x1080)
+# does not test flags
+start move.b d0, (a0), take 1
+set memory 0x000000 = 0x1080
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a0 = 0x00002000
+set pc 0x000000
+set cycles 8
+run
+check mem 0x002000 = 0xa5ef
+check cycles 0
+done
+
+# test move.b d0, (a0)+ (0x10c0)
+# does not test flags
+start move.b d0, (a0)+, take 1
+set memory 0x000000 = 0x10c0
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a0 = 0x00002000
+set pc 0x000000
+set cycles 8
+run
+check mem 0x002000 = 0xa5ef
+check reg a0 = 0x00002001
+check cycles 0
+done
+
+# test move.b d0, -(a0) (0x1100)
+# does not test flags
+start move.b d0, -(a0), take 1
+set memory 0x000000 = 0x1100
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a0 = 0x00002001
+set pc 0x000000
+set cycles 8
+run
+check mem 0x002000 = 0xa5ef
+check reg a0 = 0x00002000
+check cycles 0
+done
+
+# test move.b d0, (a7)+ (0x1ec0)
+# does not test flags
+start move.b d0, (a7)+, take 1
+set memory 0x000000 = 0x1ec0
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a7 = 0x00002000
+set pc 0x000000
+set cycles 8
+run
+check mem 0x002000 = 0xa5ef
+check reg a7 = 0x00002002
+check cycles 0
+done
+
+# test move.b d0, -(a7) (0x1f00)
+# does not test flags
+start move.b d0, -(a7), take 1
+set memory 0x000000 = 0x1f00
+set register d0 = 0x5a5aa5a5
+set memory 0x002000 = 0xbeef
+set register a7 = 0x00002002
+set pc 0x000000
+set cycles 8
+run
+check mem 0x002000 = 0xa5ef
+check reg a7 = 0x00002000
+check cycles 0
+done
+
+# test move.b d(a0), d0 (0x1028)
+# does not test flags
+start move.b d(a0), d0, take 1
+set memory 0x000000 = 0x1028
+set memory 0x000002 = 0x0004
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set memory 0x002004 = 0x55aa
+set pc 0x000000
+set cycles 12
+run
+check pc 0x000004
+check reg d0 = 0x87654355
+check cycles 0
+done
+
+# test move.b d(a0), d0 (0x1028)
+# does not test flags
+start move.b d(a0), d0, take 2
+set memory 0x000000 = 0x1028
+set memory 0x000002 = 0xfffc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set memory 0x001ffc = 0x55aa
+set pc 0x000000
+set cycles 12
+run
+check pc 0x000004
+check reg d0 = 0x87654355
+check cycles 0
+done
+
+# test move.b d0, d(a0) (0x1140)
+# does not test flags
+start move.b d0, d(a0), take 1
+set memory 0x000000 = 0x1140
+set memory 0x000002 = 0x0004
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set memory 0x002004 = 0x55aa
+set pc 0x000000
+set cycles 12
+run
+check pc 0x000004
+check mem 0x002004 = 0x21aa
+check cycles 0
+done
+
+# test move.b d0, d(a0) (0x1140)
+# does not test flags
+start move.b d0, d(a0), take 2
+set memory 0x000000 = 0x1140
+set memory 0x000002 = 0xfffc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set memory 0x001ffc = 0x55aa
+set pc 0x000000
+set cycles 12
+run
+check pc 0x000004
+check mem 0x001ffc = 0x21aa
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.w), take 1
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x9004
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x00000004
+set memory 0x002008 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002008 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.w), take 2
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x9004
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x0000fffc
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.w), take 3
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x90fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x00000004
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.w), take 4
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x90fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x0000fffc
+set memory 0x001ff8 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x001ff8 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.l), take 1
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x9804
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x00000004
+set memory 0x002008 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002008 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.l), take 2
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x9804
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x0000fffc
+set memory 0x012000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x012000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.l), take 3
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x98fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x00000004
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, a1.l), take 4
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x98fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register a1 = 0x0000fffc
+set memory 0x011ff8 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x011ff8 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.w), take 1
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x1004
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x00000004
+set memory 0x002008 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002008 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.w), take 2
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x1004
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x0000fffc
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.w), take 3
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x10fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x00000004
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.w), take 4
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x10fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x0000fffc
+set memory 0x001ff8 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x001ff8 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.l), take 1
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x1804
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x00000004
+set memory 0x002008 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002008 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.l), take 2
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x1804
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x0000fffc
+set memory 0x012000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x012000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.l), take 3
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x18fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x00000004
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, d(a0, [da]0.[lw]) (0x1180)
+# does not test flags
+start move.b d0, d(a0, d1.l), take 4
+set memory 0x000000 = 0x1180
+set memory 0x000002 = 0x18fc
+set register d0 = 0x87654321
+set register a0 = 0x00002000
+set register d1 = 0x0000fffc
+set memory 0x011ff8 = 0xbeef
+set pc 0x000000
+set cycles 14
+run
+check pc 0x000004
+check mem 0x011ff8 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, xxx.W (0x11c0)
+# does not test flags
+start move.b d0, xxx.W, take 1
+set memory 0x000000 = 0x11c0
+set memory 0x000002 = 0x2000
+set register d0 = 0x87654321
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 12
+run
+check pc 0x000004
+check memory 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, xxx.W (0x11c0)
+# does not test flags
+start move.b d0, xxx.W, take 2
+set memory 0x000000 = 0x11c0
+set memory 0x000002 = 0xfff8
+set register d0 = 0x87654321
+set memory 0xfffff8 = 0xbeef
+set pc 0x000000
+set cycles 12
+run
+check pc 0x000004
+check memory 0xfffff8 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, xxx.L (0x13c0)
+# does not test flags
+start move.b d0, xxx.L, take 1
+set memory 0x000000 = 0x13c0
+set memory 0x000002 = 0x0000
+set memory 0x000004 = 0x2000
+set register d0 = 0x87654321
+set memory 0x002000 = 0xbeef
+set pc 0x000000
+set cycles 16
+run
+check pc 0x000006
+check memory 0x002000 = 0x21ef
+check cycles 0
+done
+
+# test move.b d0, xxx.L (0x13c0)
+# does not test flags
+start move.b d0, xxx.L, take 2
+set memory 0x000000 = 0x13c0
+set memory 0x000002 = 0xffff
+set memory 0x000004 = 0xfff8
+set register d0 = 0x87654321
+set memory 0xfffff8 = 0xbeef
+set pc 0x000000
+set cycles 16
+run
+check pc 0x000006
+check memory 0xfffff8 = 0x21ef
+check cycles 0
+done
+
+# test move.b x(pc), d0 (0x10ca)
+start move.b x(pc), d0, take 1
+set memory 0x002000 = 0x103a
+set memory 0x002002 = 0x0346
+set register d0 = 0x87654321
+set memory 0x002348 = 0xbeef
+set pc 0x002000
+set cycles 12
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b x(pc), d0 (0x10ca)
+start move.b x(pc), d0, take 2
+set memory 0x002000 = 0x103a
+set memory 0x002002 = 0xfff8
+set register d0 = 0x87654321
+set memory 0x001ffa = 0xbeef
+set pc 0x002000
+set cycles 12
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.w), d0, take 1
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x9004
+set register d0 = 0x87654321
+set register a1 = 0x00000004
+set memory 0x00200a = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.w), d0, take 2
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x9004
+set register d0 = 0x87654321
+set register a1 = 0x0000fffc
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x87654390
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.w), d0, take 3
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x90fc
+set register d0 = 0x87654321
+set register a1 = 0x00000004
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x87654390
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.w), d0, take 4
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x90fc
+set register d0 = 0x87654321
+set register a1 = 0x0000fffc
+set memory 0x001ffa = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.l), d0, take 1
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x9804
+set register d0 = 0x87654321
+set register a1 = 0x00000004
+set memory 0x00200a = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.l), d0, take 2
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x9804
+set register d0 = 0x87654321
+set register a1 = 0x0000fffc
+set memory 0x012002 = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.l), d0, take 3
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x98fc
+set register d0 = 0x87654321
+set register a1 = 0x00000004
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x87654398
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, a1.l), d0, take 4
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x98fc
+set register d0 = 0x87654321
+set register a1 = 0x0000fffc
+set memory 0x011ffa = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.w), d0, take 1
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x1004
+set register d0 = 0x87654321
+set register d1 = 0x00000004
+set memory 0x00200a = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.w), d0, take 2
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x1004
+set register d0 = 0x87654321
+set register d1 = 0x0000fffc
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x87654310
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.w), d0, take 3
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x10fc
+set register d0 = 0x87654321
+set register d1 = 0x00000004
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x87654310
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.w), d0, take 4
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x10fc
+set register d0 = 0x87654321
+set register d1 = 0x0000fffc
+set memory 0x001ffa = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.l), d0, take 1
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x1804
+set register d0 = 0x87654321
+set register d1 = 0x00000004
+set memory 0x00200a = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.l), d0, take 2
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x1804
+set register d0 = 0x87654321
+set register d1 = 0x0000fffc
+set memory 0x012002 = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.l), d0, take 3
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x18fc
+set register d0 = 0x87654321
+set register d1 = 0x00000004
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x87654318
+check cycles 0
+done
+
+# test move.b d(pc, [da]0.[lw]), d0 (0x103b)
+# does not test flags
+start move.b d(pc, d1.l), d0, take 4
+set memory 0x002000 = 0x103b
+set memory 0x002002 = 0x18fc
+set register d0 = 0x87654321
+set register d1 = 0x0000fffc
+set memory 0x011ffa = 0xbeef
+set pc 0x002000
+set cycles 14
+run
+check pc 0x002004
+check reg d0 = 0x876543be
+check cycles 0
+done
+
+# test move.b #xxx, d0 (0x103c)
+# does not test flags
+start move.b #xxx, d0
+set memory 0x000000 = 0x103c
+set memory 0x000002 = 0x00ef
+set reg d0 = 0x87654321
+set pc 0x000000
+set cycles 8
+run
+check pc 0x000004
+check reg d0 = 0x876543ef
+check cycles 0
+done
+
+# test MOVEA.W d0, a0
+start movea.w d0, a0, take 1
+set mem 0x002000 = 0x3040
+set reg d0 = 0x00000000
+set reg a0 = 0x55aa55aa
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg a0 = 0x00000000
+done
+
+# test MOVEA.W d0, a0
+start movea.w d0, a0, take 1
+set mem 0x002000 = 0x3040
+set reg d0 = 0x0000ffff
+set reg a0 = 0x55aa55aa
+set pc 0x002000
+set cycles 4
+run
+check pc 0x002002
+check cycles 0
+check reg a0 = 0xffffffff
+done
+
+#
+# $Log: 68k_test_1,v $
+# Revision 1.3  1999/12/18 04:18:01  nyef
+# added tests for MOVEA.W
+#
+# Revision 1.2  1999/12/15 00:56:56  nyef
+# changed cycle counts to better reflect the official motorola docu
+#
+# Revision 1.1  1999/12/13 03:14:46  nyef
+# Initial revision
+#
+#

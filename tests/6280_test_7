@@ -1,0 +1,180 @@
+#
+# 6280_test_7
+#
+# test register transfer instructions
+#
+
+#
+# test SAX (0x22)
+#
+
+start sax (0x22), take 1
+set mem 0x2000 = 0x22
+set reg a = 0x85
+set reg x = 0x00
+set cycles 3
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x00
+check reg x = 0x85
+check flags 0x00
+done
+
+#
+# test SAY (0x42)
+#
+
+start say (0x42), take 1
+set mem 0x2000 = 0x42
+set reg a = 0x85
+set reg y = 0x00
+set cycles 3
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x00
+check reg y = 0x85
+check flags 0x00
+done
+
+#
+# test SXY (0x02)
+#
+
+start sxy (0x02), take 1
+set mem 0x2000 = 0x02
+set reg x = 0x85
+set reg y = 0x00
+set cycles 3
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg x = 0x00
+check reg y = 0x85
+check flags 0x00
+done
+
+#
+# test TAX (0xaa)
+#
+
+start tax (0xaa), take 1
+set mem 0x2000 = 0xaa
+set reg a = 0x85
+set reg x = 0x00
+set cycles 2
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x85
+check reg x = 0x85
+check flags 0x80
+done
+
+#
+# test TAY (0xa8)
+#
+
+start tay (0xa8), take 1
+set mem 0x2000 = 0xa8
+set reg a = 0x85
+set reg y = 0x00
+set cycles 2
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x85
+check reg y = 0x85
+check flags 0x80
+done
+
+#
+# test TSX (0xba)
+#
+
+start tsx (0xba), take 1
+set mem 0x2000 = 0xba
+set reg s = 0x85
+set reg x = 0x00
+set cycles 2
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg s = 0x85
+check reg x = 0x85
+check flags 0x80
+done
+
+#
+# test TXA (0x8a)
+#
+
+start txa (0x8a), take 1
+set mem 0x2000 = 0x8a
+set reg x = 0x85
+set reg a = 0x00
+set cycles 2
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x85
+check reg x = 0x85
+check flags 0x80
+done
+
+#
+# test TXS (0x9a)
+#
+
+start txs (0x9a), take 1
+set mem 0x2000 = 0x9a
+set reg x = 0x85
+set reg s = 0x00
+set cycles 2
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg x = 0x85
+check reg s = 0x85
+check flags 0x00
+done
+
+#
+# test TYA (0x98)
+#
+
+start tya (0x98), take 1
+set mem 0x2000 = 0x98
+set reg y = 0x85
+set reg a = 0x00
+set cycles 2
+set flags 0x00
+set pc 0x2000
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x85
+check reg y = 0x85
+check flags 0x80
+done
+
+#
+# EOF
+#

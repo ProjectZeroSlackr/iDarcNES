@@ -1,0 +1,264 @@
+#
+# 6280_test_11
+#
+# test shift/rotate instructions
+#
+
+#
+# the shift/rotate instructions follow a pattern similar to the "big 8"
+# instructions with regards to addressing mode. Therefore, we test each
+# instructions vs. the accumulator, and one instruction with each addressing
+# mode, and build the code generator like we did the "big 8" generator
+#
+
+#
+# test ASL Acc (0x0a)
+#
+
+start asl acc (0x0a), take 1
+set mem 0x2000 = 0x0a
+set reg a = 0x55
+set flags 0xff
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0xaa
+check flags 0xfc
+done
+
+start asl acc (0x0a), take 2
+set mem 0x2000 = 0x0a
+set reg a = 0x55
+set flags 0x01
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0xaa
+check flags 0x80
+done
+
+start asl acc (0x0a), take 3
+set mem 0x2000 = 0x0a
+set reg a = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x54
+check flags 0x01
+done
+
+#
+# test ROL Acc (0x2a)
+#
+
+start rol acc (0x2a), take 1
+set mem 0x2000 = 0x2a
+set reg a = 0x55
+set flags 0xff
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0xab
+check flags 0xfc
+done
+
+start rol acc (0x2a), take 2
+set mem 0x2000 = 0x2a
+set reg a = 0x55
+set flags 0x01
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0xab
+check flags 0x80
+done
+
+start rol acc (0x2a), take 3
+set mem 0x2000 = 0x2a
+set reg a = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x54
+check flags 0x01
+done
+
+#
+# test LSR Acc (0x4a)
+#
+
+start lsr acc (0x4a), take 1
+set mem 0x2000 = 0x4a
+set reg a = 0x55
+set flags 0xff
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x2a
+check flags 0x7d
+done
+
+start lsr acc (0x4a), take 2
+set mem 0x2000 = 0x4a
+set reg a = 0x55
+set flags 0x01
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x2a
+check flags 0x01
+done
+
+start lsr acc (0x4a), take 3
+set mem 0x2000 = 0x4a
+set reg a = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x55
+check flags 0x00
+done
+
+#
+# test ROR Acc (0x6a)
+#
+
+start ror acc (0x6a), take 1
+set mem 0x2000 = 0x6a
+set reg a = 0x55
+set flags 0xff
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0xaa
+check flags 0xfd
+done
+
+start ror acc (0x6a), take 2
+set mem 0x2000 = 0x6a
+set reg a = 0x55
+set flags 0x01
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0xaa
+check flags 0x81
+done
+
+start ror acc (0x6a), take 3
+set mem 0x2000 = 0x6a
+set reg a = 0xaa
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2001
+check reg a = 0x55
+check flags 0x00
+done
+
+#
+# test ASL ZPage (0x06)
+#
+
+start asl zpage (0x06), take 1
+set mem 0x2000 = 0x06
+set mem 0x2001 = 0x92
+set mem 0x0092 = 0x55
+set flags 0xff
+set pc 0x2000
+set cycles 5
+run
+check cycles 0
+check pc 0x2002
+check mem 0x0092 = 0xaa
+check flags 0xfc
+done
+
+#
+# test ASL ZPage, X (0x16)
+#
+
+start asl zpagex (0x16), take 1
+set mem 0x2000 = 0x16
+set mem 0x2001 = 0x92
+set mem 0x0090 = 0x55
+set reg x = 0xfe
+set flags 0xff
+set pc 0x2000
+set cycles 6
+run
+check cycles 0
+check pc 0x2002
+check mem 0x0090 = 0xaa
+check flags 0xfc
+done
+
+#
+# test ASL Abs (0x0e)
+#
+
+start asl abs (0x0e), take 1
+set mem 0x2000 = 0x0e
+set mem 0x2001 = 0x92
+set mem 0x2002 = 0x43
+set mem 0x4392 = 0x55
+set flags 0xff
+set pc 0x2000
+set cycles 6
+run
+check cycles 0
+check pc 0x2003
+check mem 0x4392 = 0xaa
+check flags 0xfc
+done
+
+#
+# test ASL Abs, X (0x1e)
+#
+
+start asl absx (0x1e), take 1
+set mem 0x2000 = 0x1e
+set mem 0x2001 = 0x92
+set mem 0x2002 = 0x43
+set mem 0x4490 = 0x55
+set reg x = 0xfe
+set flags 0xff
+set pc 0x2000
+set cycles 7
+run
+check cycles 0
+check pc 0x2003
+check mem 0x4490 = 0xaa
+check flags 0xfc
+done
+
+#
+# EOF
+#

@@ -1,0 +1,129 @@
+#
+# 68k_test_13
+#
+# thirteenth test file for the 68k core testing program
+#
+# tests bit maniplation instructions
+#
+
+# $Id$
+
+#
+# NOTE: Someone plays fast and loose with flags...
+#
+
+# test BTST dynamic d0, d1 (0x0101)
+start btst d0, d1 (0x0101), take 1
+set mem 0x002000 = 0x0101
+set reg d0 = 0x00000000
+set reg d1 = 0x55aa33cc
+set pc 0x002000
+set cycles 6
+set flags 0x0000
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0004
+done
+
+# test BTST dynamic d0, d1 (0x0101)
+start btst d0, d1 (0x0101), take 2
+set mem 0x002000 = 0x0101
+set reg d0 = 0x00000000
+set reg d1 = 0x55aa33cc
+set pc 0x002000
+set cycles 6
+set flags 0x001f
+run
+check pc 0x002002
+check cycles 0
+check flags 0x001f
+done
+
+# test BTST dynamic d0, d1 (0x0101)
+start btst d0, d1 (0x0101), take 3
+set mem 0x002000 = 0x0101
+set reg d0 = 0x00000002
+set reg d1 = 0x55aa33cc
+set pc 0x002000
+set cycles 6
+set flags 0x001f
+run
+check pc 0x002002
+check cycles 0
+check flags 0x001b
+done
+
+# test BTST dynamic d0, d1 (0x0101)
+start btst d0, d1 (0x0101), take 4
+set mem 0x002000 = 0x0101
+set reg d0 = 0x0000000d
+set reg d1 = 0x00002000
+set pc 0x002000
+set cycles 6
+set flags 0x0000
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0000
+done
+
+# test BTST dynamic d0, d1 (0x0101)
+start btst d0, d1 (0x0101), take 5
+set mem 0x002000 = 0x0101
+set reg d0 = 0x0000002d
+set reg d1 = 0x00002000
+set pc 0x002000
+set cycles 6
+set flags 0x0000
+run
+check pc 0x002002
+check cycles 0
+check flags 0x0000
+done
+
+# test BTST static d0 (0x0800)
+start btst #xx, d0 (0x0800), take 1
+set mem 0x002000 = 0x0800
+set mem 0x002002 = 0x0000
+set reg d0 = 0x00000000
+set pc 0x002000
+set cycles 8
+set flags 0x0000
+run
+check cycles 0
+check pc 0x002004
+check flags 0x0004
+done
+
+# test BTST static d0 (0x0800)
+start btst #xx, d0 (0x0800), take 2
+set mem 0x002000 = 0x0800
+set mem 0x002002 = 0x0006
+set reg d0 = 0x00000042
+set pc 0x002000
+set cycles 8
+set flags 0x001f
+run
+check cycles 0
+check pc 0x002004
+check flags 0x001b
+done
+
+# test BTST static d0 (0x0800)
+start btst #xx, d0 (0x0800), take 3
+set mem 0x002000 = 0x0800
+set mem 0x002002 = 0x0039
+set reg d0 = 0x02000000
+set pc 0x002000
+set cycles 8
+set flags 0x0000
+run
+check cycles 0
+check pc 0x002004
+check flags 0x0000
+done
+
+#
+# $Log$
+#

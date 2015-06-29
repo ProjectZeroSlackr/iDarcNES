@@ -1,0 +1,243 @@
+#
+# 6280_test_4
+#
+# test branch instructions
+#
+
+#
+# test BRA (0x80)
+#
+# also tests extreme limits of branch range
+#
+
+start bra (0x80), take 1
+set mem 0x2000 = 0x80
+set mem 0x2001 = 0x7f
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2081
+done
+
+start bra (0x80), take 2
+set mem 0x2000 = 0x80
+set mem 0x2001 = 0x80
+set pc 0x2000
+set cycles 4
+run
+check cycles 0
+check pc 0x1f82
+done
+
+#
+# test BPL (0x10)
+#
+
+start bpl (0x10) taken, take 1
+set mem 0x2000 = 0x10
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start bpl (0x10) not taken, take 1
+set mem 0x2000 = 0x10
+set mem 0x2001 = 0x30
+set flags 0x80
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# test BMI (0x30)
+#
+
+start bmi (0x30) taken, take 1
+set mem 0x2000 = 0x30
+set mem 0x2001 = 0x30
+set flags 0x80
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start bmi (0x30) not taken, take 1
+set mem 0x2000 = 0x30
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# test BVC (0x50)
+#
+
+start bvc (0x50) taken, take 1
+set mem 0x2000 = 0x50
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start bvc (0x50) not taken, take 1
+set mem 0x2000 = 0x50
+set mem 0x2001 = 0x30
+set flags 0x40
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# test BVS (0x70)
+#
+
+start bvs (0x70) taken, take 1
+set mem 0x2000 = 0x70
+set mem 0x2001 = 0x30
+set flags 0x40
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start bvs (0x70) not taken, take 1
+set mem 0x2000 = 0x70
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# test BCC (0x90)
+#
+
+start bcc (0x90) taken, take 1
+set mem 0x2000 = 0x90
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start bcc (0x90) not taken, take 1
+set mem 0x2000 = 0x90
+set mem 0x2001 = 0x30
+set flags 0x01
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# test BCS (0xb0)
+#
+
+start bcs (0xb0) taken, take 1
+set mem 0x2000 = 0xb0
+set mem 0x2001 = 0x30
+set flags 0x01
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start bcs (0xb0) not taken, take 1
+set mem 0x2000 = 0xb0
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# test BNE (0xd0)
+#
+
+start bne (0xd0) taken, take 1
+set mem 0x2000 = 0xd0
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start bne (0xd0) not taken, take 1
+set mem 0x2000 = 0xd0
+set mem 0x2001 = 0x30
+set flags 0x02
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# test BEQ (0xf0)
+#
+
+start beq (0xf0) taken, take 1
+set mem 0x2000 = 0xf0
+set mem 0x2001 = 0x30
+set flags 0x02
+set pc 0x2000
+set cycles 3
+run
+check cycles 0
+check pc 0x2032
+done
+
+start beq (0xf0) not taken, take 1
+set mem 0x2000 = 0xf0
+set mem 0x2001 = 0x30
+set flags 0x00
+set pc 0x2000
+set cycles 2
+run
+check cycles 0
+check pc 0x2002
+done
+
+#
+# EOF
+#

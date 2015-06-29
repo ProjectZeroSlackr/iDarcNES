@@ -1,0 +1,121 @@
+#
+# 68k_test_6
+#
+# sixth test file for the 68k core testing program
+#
+# tests ADDA/ADDX instructions in the 0xdxxx range
+#
+
+# $Id$
+
+#
+# NOTE: Someone plays fast and loose with flags...
+#
+
+# test ADDA.W d0, a0
+start adda.w d0, a0, take 1
+set mem 0x002000 = 0xd0c0
+set reg d0 = 0x00000000
+set reg a0 = 0x00000000
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0x00000000
+check pc 0x002002
+check cycles 0
+done
+
+# test ADDA.W d0, a0
+start adda.w d0, a0, take 2
+set mem 0x002000 = 0xd0c0
+set reg d0 = 0x0000ffff
+set reg a0 = 0x00000000
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0xffffffff
+check pc 0x002002
+check cycles 0
+done
+
+# test ADDA.W d0, a0
+start adda.w d0, a0, take 3
+set mem 0x002000 = 0xd0c0
+set reg d0 = 0x00020001
+set reg a0 = 0x0000ffff
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0x00010000
+check pc 0x002002
+check cycles 0
+done
+
+# test ADDA.W d0, a0
+start adda.w d0, a0, take 4
+set mem 0x002000 = 0xd0c0
+set reg d0 = 0x0001ffff
+set reg a0 = 0x00020000
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0x0001ffff
+check pc 0x002002
+check cycles 0
+done
+
+# test ADDA.L d0, a0
+start adda.l d0, a0, take 1
+set mem 0x002000 = 0xd1c0
+set reg d0 = 0x00000000
+set reg a0 = 0x00000000
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0x00000000
+check pc 0x002002
+check cycles 0
+done
+
+# test ADDA.L d0, a0
+start adda.l d0, a0, take 2
+set mem 0x002000 = 0xd1c0
+set reg d0 = 0x0000ffff
+set reg a0 = 0x00000000
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0x0000ffff
+check pc 0x002002
+check cycles 0
+done
+
+# test ADDA.L d0, a0
+start adda.l d0, a0, take 3
+set mem 0x002000 = 0xd1c0
+set reg d0 = 0x00020001
+set reg a0 = 0x0000ffff
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0x00030000
+check pc 0x002002
+check cycles 0
+done
+
+# test ADDA.L d0, a0
+start adda.l d0, a0, take 4
+set mem 0x002000 = 0xd1c0
+set reg d0 = 0x0001ffff
+set reg a0 = 0x00010000
+set pc 0x002000
+set cycles 8
+run
+check reg a0 = 0x0002ffff
+check pc 0x002002
+check cycles 0
+done
+
+#
+# $Log$
+#

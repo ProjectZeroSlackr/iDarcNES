@@ -19,6 +19,7 @@
 #include "nes_psg.h"
 #include "cal.h"
 #include "event.h"
+extern char* filename;
 const struct joypad_button_template nes_joypad_template = {
     8, {0x10, 0x20, 0x40, 0x80, 0x01, 0x02, 0x04, 0x08}
 };
@@ -62,18 +63,26 @@ readhook_t nes_bank4_read_hook;
 readhook_t nes_bank6_read_hook;
 writehook_t nes_bank4_write_hook;
 writehook_t nes_bank6_write_hook;
+// They don't work
+// ~Keripo
+/*
 void saves()
 {
-  FILE *fp=fopen("/mnt/idarcnesave.sav","w");
+  char save[256];
+  snprintf(save, 256, "/opt/Emulators/iDarcNES/Saves/%s.sav", filename);
+  FILE *fp=fopen(save,"w");
   fprintf(fp,"%s\n%s\n%s\n%s\n%s\n%s\n%s\n",vromimage,bank_0,bank_6,bank_8,bank_A,bank_C,bank_E);
   fclose(fp);
 }
 void loads()
 {
-  FILE *fp=fopen("/mnt/idarcnesave.sav","r");
+  char save[256];
+  snprintf(save, 256, "/opt/Emulators/iDarcNES/Saves/%s.sav", filename);
+  FILE *fp=fopen(save,"r");
   fscanf(fp,"%s\n%s\n%s\n%s\n%s\n%s\n%s\n",&vromimage,&bank_0,&bank_6,&bank_8,&bank_A,&bank_C,&bank_E);
   fclose(fp);
 }
+*/
 unsigned char mask_bank_addr(unsigned char bank)
 {
     unsigned char i;

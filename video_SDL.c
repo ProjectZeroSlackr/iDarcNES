@@ -73,7 +73,7 @@ struct spritedata {
 };
 void video_events(void);
 int fskip=2,fr;
-int volume=64;
+int volume=48;
 int selected=0;
 int totalentries=2;
 #define MAINMENU 0
@@ -238,7 +238,7 @@ void ssave(void);
 void keyc(char z,unsigned int *y);
 void ssave()
 {
-  FILE*fp=fopen("/mnt/idarcnes.cfg","w");
+  FILE*fp=fopen("/opt/Emulators/iDarcNES/Conf/iDarcNES.cfg","w");
   int i;
   for(i=0;i<=7;i++)
   fprintf(fp,"kb%i=%c\n",i,kbc[i]);
@@ -310,10 +310,12 @@ void cfg(int k){
 		case MAINMENU:
 				if (selected==0) { whereinmenu=CFGMENU; selected=0; }
 				if (selected==1) { whereinmenu=ROMSMENU; selected=0; } 
-				if (selected==2) {  nes_save_battery_file(); }
-				if(selected==3) {saves();}
-				if(selected==4) {loads();}
-				if (selected==5) {HD_LCD_Quit();free(nes_imageb);cop_end(); nes_shutdown();STOP_INPUT();/*free(romfile);free(screen);free(nes_image);*/PPU_shutdown();exit(0);qui=0;}
+				// All defunct at the moment
+				// ~Keripo
+				//if (selected==2) {  nes_save_battery_file(); }
+				//if(selected==3) {saves();}
+				//if(selected==4) {loads();}
+				if (selected==2) {HD_LCD_Quit();free(nes_imageb);cop_end(); nes_shutdown();STOP_INPUT();/*free(romfile);free(screen);free(nes_image);*/PPU_shutdown();exit(0);qui=0;}
 			break;
 		case CFGMENU:
 				if (selected==0) { scaletoggle(); }
@@ -820,18 +822,6 @@ void video_setsize(int x, int y)
     }
 	rescale();
 	cop_begin(video_display_buffer_);
-	FILE *fcfg=fopen("idarcnes.cfg","r");
-	if (fcfg)
-	{
-	fread(&actcfg,4,1,fcfg);
-	fread(&outcfg,4,1,fcfg);
-	fread(&diags,4,1,fcfg);
-	fread(&nicescale,4,1,fcfg);
-	fread(&scaling,4,1,fcfg);
-	fread(&fsprnum,4,1,fcfg);
-	fread(&volume,4,1,fcfg);
-	fclose(fcfg);
-	}
 }
 
 void video_enter_deb(void)
@@ -1122,13 +1112,15 @@ void doMenu()
 	switch(whereinmenu)
 	{
 		case MAINMENU:
-			totalentries=5;		
+			totalentries=2;		
 			printMenu("CONFIG","",selected==0);
 			printMenu("LOAD ROM","",selected==1);
-			printMenu("SAVE BATTERY","",selected==2);
-			printMenu("SAVE STATE","",selected==3);
-			printMenu("LOAD","",selected==4);
-			printMenu("QUIT","",selected==5);
+			// All defunct at the moment
+			// ~Keripo
+			//printMenu("SAVE BATTERY","",selected==2);
+			//printMenu("SAVE STATE","",selected==3);
+			//printMenu("LOAD","",selected==4);
+			printMenu("QUIT","",selected==2);
 			break;
 		case CFGMENU:
 			totalentries=5;		
@@ -1166,10 +1158,8 @@ void doMenu()
 			printMenu("SAVE","",selected==5);
 			break;
 		case ROMSMENU: 
-	if (doRomMenu("/bin")==0) 
-		if (doRomMenu("/hp/nes")==0) 
-			if (doRomMenu("/mnt/nes")==0)
-				doRomMenu("/mnt/idarcnes/roms");
+			if (doRomMenu("Roms")==0)
+				doRomMenu("/opt/Emulators/iDarcNES/Roms");
 			break;
 		case KEYSMENU:
 			totalentries=12;		

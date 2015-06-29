@@ -43,7 +43,7 @@ LDFLAGS+=-L../ttk/libs/SDL
 CFLAGS+=-I/usr/include/SDL -elf2flt
 SFLAGS+=-I/usr/X11R6/include
 SYSTEMSRCS=video_SDL.c ui_SDL.c snd_unix.c cop.c tiledraw.S include.S ncpu.S
-BINFILE=idarcnes
+BINFILE=iDarcNES
 LIBS=-L../hotdog/ipod -lhotdog -Wl,-elf2flt
 endif
 
@@ -177,8 +177,8 @@ blitters.o: blitters.S machdep.h
 
 DEPSRCS += test_68k.c test_6280.c test_6502.c
 
-.PHONY: tests
-tests: run_test_68k run_test_6280 run_test_6502
+#.PHONY: tests
+#tests: run_test_68k run_test_6280 run_test_6502
 
 
 # special handling for generic palette code
@@ -195,72 +195,72 @@ palette32.o: palette.c palette.h types.h
 
 # special handling for 68000 core
 
-.PHONY: run_test_68k
-run_test_68k: test_68k
-	cat tests/68k_test_*[0-9] | ./test_68k
-
-RMFILES += test_68k
-test_68k: test_68k.o emu68k.o
-	$(LD) $(LDFLAGS) -o test_68k test_68k.o emu68k.o
+#.PHONY: run_test_68k
+#run_test_68k: test_68k
+#	cat tests/68k_test_*[0-9] | ./test_68k
+#
+#RMFILES += test_68k
+#test_68k: test_68k.o emu68k.o
+#	$(LD) $(LDFLAGS) -o test_68k test_68k.o emu68k.o
 
 
 # special handling for 6280 core
 
-.PHONY: run_test_6280
-run_test_6280: test_6280
-	cat tests/6280_test_*[0-9] | ./test_6280
-
-RMFILES += test_6280
-test_6280: test_6280.o cpu6280.o cpu6280opc.o
-	$(LD) $(LDFLAGS) -o test_6280 test_6280.o cpu6280.o cpu6280opc.o
-
-NODEPSRCS += cpu6280opc.c
-RMFILES += cpu6280opc.c
-cpu6280opc.o: cpu6280opc.c cpu6280int.h
-
-cpu6280opc.c: build_cpu6280
-	./build_cpu6280 cpu6280opc.c
-
-DEPSRCS += build_cpu6280.c
-
-build_cpu6280.o: build_cpu6280.c
-	$(CC) -c $(LCFLAGS) $<
-
-RMFILES += build_cpu6280
-build_cpu6280: build_cpu6280.o
-	$(CC) $(LCFLAGS) -o build_cpu6280 build_cpu6280.o
+#.PHONY: run_test_6280
+#run_test_6280: test_6280
+#	cat tests/6280_test_*[0-9] | ./test_6280
+#
+#RMFILES += test_6280
+#test_6280: test_6280.o cpu6280.o cpu6280opc.o
+#	$(LD) $(LDFLAGS) -o test_6280 test_6280.o cpu6280.o cpu6280opc.o
+#
+#NODEPSRCS += cpu6280opc.c
+#RMFILES += cpu6280opc.c
+#cpu6280opc.o: cpu6280opc.c cpu6280int.h
+#
+#cpu6280opc.c: build_cpu6280
+#	./build_cpu6280 cpu6280opc.c
+#
+#DEPSRCS += build_cpu6280.c
+#
+#build_cpu6280.o: build_cpu6280.c
+#	$(CC) -c $(LCFLAGS) $<
+#
+#RMFILES += build_cpu6280
+#build_cpu6280: build_cpu6280.o
+#	$(CC) $(LCFLAGS) -o build_cpu6280 build_cpu6280.o
 
 
 # special handling for 6502 core
 
-.PHONY: run_test_6502
-run_test_6502: test_6502
-	cat tests/6502_test_*[0-9] | ./test_6502
-
-RMFILES += test_6502
-test_6502: test_6502.o cpu6502.o cpu6502opc.o
-	$(LD) $(LDFLAGS) -o test_6502 test_6502.o cpu6502.o cpu6502opc.o
-
-NODEPSRCS += cpu6502opc.c
-RMFILES += cpu6502opc.c
-cpu6502opc.o: cpu6502opc.c cpu6502int.h
-
-cpu6502opc.c: build_cpu6502
-	./build_cpu6502 cpu6502opc.c
-
-DEPSRCS += build_cpu6502.c
-
-build_cpu6502.o: build_cpu6502.c
-	$(CC) -c $(LCFLAGS) $<
-
-RMFILES += build_cpu6502
-build_cpu6502: build_cpu6502.o
-	$(CC) $(LCFLAGS) -o build_cpu6502 build_cpu6502.o
+#.PHONY: run_test_6502
+#run_test_6502: test_6502
+#	cat tests/6502_test_*[0-9] | ./test_6502
+#
+#RMFILES += test_6502
+#test_6502: test_6502.o cpu6502.o cpu6502opc.o
+#	$(LD) $(LDFLAGS) -o test_6502 test_6502.o cpu6502.o cpu6502opc.o
+#
+#NODEPSRCS += cpu6502opc.c
+#RMFILES += cpu6502opc.c
+#cpu6502opc.o: cpu6502opc.c cpu6502int.h
+#
+#cpu6502opc.c: build_cpu6502
+#	./build_cpu6502 cpu6502opc.c
+#
+#DEPSRCS += build_cpu6502.c
+#
+#build_cpu6502.o: build_cpu6502.c
+#	$(CC) -c $(LCFLAGS) $<
+#
+#RMFILES += build_cpu6502
+#build_cpu6502: build_cpu6502.o
+#	$(CC) $(LCFLAGS) -o build_cpu6502 build_cpu6502.o
 
 
 .PHONY: clean
 clean:
-	rm -f *.o *.d *~ "#"*"#" $(BINFILE) $(RMFILES)
+	rm -f *.o *.d *~ "#"*"#" $(BINFILE) $(RMFILES) iDarcNES.gdb
 
 .PHONY: distr
 distr: clean
@@ -295,20 +295,20 @@ DEPFILES += $(patsubst %.cpp,%.d,$(filter %.cpp,$(filter-out $(NODEPSRCS),$(DEPS
 # include depend files unles we are making clean
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),distr)
-include $(DEPFILES)
+#include $(DEPFILES)
 endif
 endif
 
-RMFILES+=fixdep
-NODEPSRCS+=fixdep.c
-fixdep: fixdep.c
-	$(CC) -o $@ $(LCFLAGS) $<
-
-%.d: %.cpp fixdep
-	$(TARGET_CXX) $(CFLAGS) -MM $< | ./fixdep > $@
-
-%.d: %.c fixdep
-	$(TARGET_CC) $(CFLAGS) -MM $< | ./fixdep > $@
+#RMFILES+=fixdep
+#NODEPSRCS+=fixdep.c
+#fixdep: fixdep.c
+#	$(CC) -o $@ $(LCFLAGS) $<
+#
+#%.d: %.cpp fixdep
+#	$(TARGET_CXX) $(CFLAGS) -MM $< | ./fixdep > $@
+#
+#%.d: %.c fixdep
+#	$(TARGET_CC) $(CFLAGS) -MM $< | ./fixdep > $@
 
 #
 # $Log: Makefile,v $

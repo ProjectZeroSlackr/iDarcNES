@@ -1,1 +1,0 @@
-arm-elf-gcc -c -I/usr/X11R6/include -Wall  -O3 -fomit-frame-pointer -fstrength-reduce -funroll-loops ncpu.S
